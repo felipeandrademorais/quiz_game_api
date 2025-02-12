@@ -19,6 +19,10 @@ export class QuestionsService {
     return this.prisma.question.create({
       data: {
         content: dto.content,
+        optionA: dto.optionA,
+        optionB: dto.optionB,
+        optionC: dto.optionC,
+        optionD: dto.optionD,
         answer: dto.answer,
         explanation: dto.explanation,
         orderIndex: dto.orderIndex,
@@ -86,6 +90,10 @@ export class QuestionsService {
       where: { id },
       data: {
         ...(dto.content && { content: dto.content }),
+        ...(dto.optionA && { optionA: dto.optionA }),
+        ...(dto.optionB && { optionB: dto.optionB }),
+        ...(dto.optionC && { optionC: dto.optionC }),
+        ...(dto.optionD && { optionD: dto.optionD }),
         ...(dto.answer && { answer: dto.answer }),
         ...(dto.explanation && { explanation: dto.explanation }),
         ...(dto.orderIndex && { orderIndex: dto.orderIndex }),

@@ -44,6 +44,10 @@ model Question {
     id          String            @id @default(uuid())
     seasonId    String
     content     String
+    optionA     String
+    optionB     String
+    optionC     String
+    optionD     String
     answer      String
     explanation String
     points      Int               @default(10)

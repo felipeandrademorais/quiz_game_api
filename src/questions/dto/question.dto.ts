@@ -8,6 +8,22 @@ export class CreateQuestionDto {
 
   @ApiProperty()
   @IsString()
+  optionA: string;
+
+  @ApiProperty()
+  @IsString()
+  optionB: string;
+
+  @ApiProperty()
+  @IsString()
+  optionC: string;
+
+  @ApiProperty()
+  @IsString()
+  optionD: string;
+
+  @ApiProperty()
+  @IsString()
   answer: string;
 
   @ApiProperty()
@@ -28,6 +44,26 @@ export class UpdateQuestionDto {
   @IsString()
   @IsOptional()
   content?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  optionA?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  optionB?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  optionC?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  optionD?: string;
 
   @ApiProperty({ required: false })
   @IsString()
