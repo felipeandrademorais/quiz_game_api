@@ -10,17 +10,18 @@ import {
   UpdateSeasonDto,
   SeasonFilterDto,
 } from './dto/season.dto';
+import { SeasonStatus } from '@prisma/client';
 
 @Injectable()
 export class SeasonsService {
   constructor(private readonly prisma: PrismaService) {}
-
   async create(dto: CreateSeasonDto) {
     return this.prisma.season.create({
       data: {
         title: dto.title,
         startDate: new Date(dto.startDate),
         endDate: new Date(dto.endDate),
+        status: 'OPEN',
       },
     });
   }
@@ -29,12 +30,15 @@ export class SeasonsService {
     const { date, page = 1, limit = 10 } = filter;
     const skip = (page - 1) * limit;
 
-    const where = date
-      ? {
-          startDate: { lte: new Date(date) },
-          endDate: { gte: new Date(date) },
-        }
-      : {};
+    const where = {
+      status: { in: ['OPEN', 'IN_PROGRESS'] as SeasonStatus[] },
+      ...(date
+        ? {
+            startDate: { lte: new Date(date) },
+            endDate: { gte: new Date(date) },
+          }
+        : {}),
+    };
 
     const [seasons, total] = await Promise.all([
       this.prisma.season.findMany({
@@ -129,6 +133,11 @@ export class SeasonsService {
       return existingProgress;
     }
 
+    await this.prisma.season.update({
+      where: { id: seasonId },
+      data: { status: 'IN_PROGRESS' },
+    });
+
     return this.prisma.seasonProgress.create({
       data: {
         userId,
@@ -154,6 +163,11 @@ export class SeasonsService {
     if (progress.isCompleted) {
       throw new BadRequestException('Season is already completed');
     }
+
+    await this.prisma.season.update({
+      where: { id: seasonId },
+      data: { status: 'FINISHED' },
+    });
 
     return this.prisma.seasonProgress.update({
       where: {
