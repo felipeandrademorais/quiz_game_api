@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: quiz-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nest
+    ports:
+      - '5439:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mail:
+    image: mailhog/mailhog:latest
+    container_name: quiz-mail
+    ports:
+      - '1025:1025'
+      - '8025:8025'
+
+volumes:
+  postgres_data:

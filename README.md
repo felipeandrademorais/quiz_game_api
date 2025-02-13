@@ -140,6 +140,53 @@ The application uses Prisma as ORM with the following main models:
 - **Question**: Quiz questions with options
 - **QuestionAttempt**: User attempts and scoring
 
+## Prisma Database Commands
+
+### Schema Management
+
+```bash
+# Generate Prisma Client after schema changes
+$ npx prisma generate
+
+# Format the schema file
+$ npx prisma format
+
+# Validate the schema
+$ npx prisma validate
+```
+
+### Database Migrations
+
+```bash
+# Create a new migration
+$ npx prisma migrate dev --name migration_name
+
+# Apply pending migrations to the database
+$ npx prisma migrate deploy
+
+# Reset the database (drops all data)
+$ npx prisma migrate reset
+
+# View migration history
+$ npx prisma migrate status
+```
+
+### Database Management
+
+```bash
+# Open Prisma Studio (database GUI)
+$ npx prisma studio
+
+# Pull the schema from an existing database
+$ npx prisma db pull
+
+# Push the schema to the database without migrations
+$ npx prisma db push
+
+# Seed the database
+$ npx prisma db seed
+```
+
 ## Contributing
 
 1. Fork the repository
